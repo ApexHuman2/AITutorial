@@ -62,7 +62,9 @@
       "Bash(git remote *)",
       "Bash(git push *)",
       "Bash(curl -sI https://github.com/ApexHuman2/AITutorial)",
-      "Bash(git ls-remote *)"
+      "Bash(git ls-remote *)",
+      "Bash(curl -sI https://github.com/ApexHuman2)",
+      "Bash(security find-internet-password *)"
     ]
   }
 }
