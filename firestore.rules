@@ -1,0 +1,61 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /users/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+
+      // On first sign-in the client may create its own profile, but it may NOT
+      // hand itself a paid plan — a new account must start on "free".
+      allow create: if request.auth != null
+                    && request.auth.uid == uid
+                    && (
+                      !("subscription" in request.resource.data)
+                      || request.resource.data.subscription.plan == "free"
+                    );
+
+      // The client can edit its own profile (name, avatar, progress) but must
+      // NOT change the `subscription` field. Real upgrades happen server-side
+      // through the Admin SDK (e.g. the PayMongo webhook), which bypasses rules.
+      allow update: if request.auth != null
+                    && request.auth.uid == uid
+                    && !request.resource.data.diff(resource.data)
+                          .affectedKeys().hasAny(["subscription"]);
+
+      // No client deletes of user docs.
+      allow delete: if false;
+
+      match /enrollments/{courseId} {
+        allow read, write: if request.auth != null && request.auth.uid == uid;
+      }
+    }
+
+    // Courses + lessons: readable by any signed-in user; only the Admin SDK
+    // (server routes) can write — never the client.
+    match /courses/{courseId} {
+      allow read: if request.auth != null;
+      allow write: if false;
+      match /lessons/{lessonId} {
+        allow read: if request.auth != null;
+        allow write: if false;
+      }
+    }
+
+    // Instructors: readable by signed-in users; writes only via Admin SDK.
+    match /instructors/{instructorId} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+
+    // App config: read-only to clients.
+    match /config/{docId} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+
+    // Everything else: deny by default.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
