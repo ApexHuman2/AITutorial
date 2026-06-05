@@ -11,7 +11,7 @@ function dicebearUrl(style: string, seed: string) {
 }
 
 const GRADE_BANDS = ["4-6", "5-8", "6-9", "7-10", "9-12"];
-const SUBJECTS    = ["Math", "Science", "Language Arts"];
+const SUBJECTS: Course["subject"][] = ["Math", "Science", "Language Arts"];
 
 const SUBJECT_META: Record<string, { label: string; icon: string }> = {
   Math:            { label: "Mathematics", icon: "∑" },

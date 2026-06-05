@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { signInWithGoogle, signUpWithEmail } from "@/lib/auth";
-import { AuthShell, Divider, Field } from "../signin/page";
+import { AuthShell, Divider, Field } from "../signin/auth-ui";
 
 export default function SignUpPage() {
   return (

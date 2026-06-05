@@ -342,7 +342,7 @@ function LessonEditor({
   };
 
   const addStep = (type: Step["type"]) => {
-    const defaults: Partial<Step> = {
+    const defaultsByType: Partial<Record<Step["type"], Partial<Step>>> = {
       quiz: { choices: ["Option A", "Option B", "Option C", "Option D"], answer: 0 },
       "fill-blank": { answer: "" },
       "true-false": { answer: "true" },
@@ -352,7 +352,8 @@ function LessonEditor({
       "pie-divider": { numerator: 1, denominator: 4 },
       "number-line": { min: 0, max: 10, target: 5 },
       "tap-label": { labels: [{ x: 50, y: 50, text: "" }] },
-    }[type] ?? {};
+    };
+    const defaults = defaultsByType[type] ?? {};
     setSteps([...steps, { type, script: "", prompt: "", ...defaults } as Step]);
   };
 

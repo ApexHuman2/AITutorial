@@ -32,7 +32,7 @@ const SEED_PRESETS = [
   "sage","nova","leo","luna","kai","felix","aria",
 ];
 
-export function dicebearUrl(style: string, seed: string, bg = "1e1e1e") {
+function dicebearUrl(style: string, seed: string, bg = "1e1e1e") {
   return `https://api.dicebear.com/9.x/${style}/svg?seed=${encodeURIComponent(seed)}&backgroundColor=${bg}&radius=50`;
 }
 

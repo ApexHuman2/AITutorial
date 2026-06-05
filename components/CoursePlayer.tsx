@@ -136,7 +136,7 @@ export default function CoursePlayer({
               className="border border-absolute-black rounded-[3px] p-5 md:p-7 bg-pure-white"
             >
               {Widget && isInteractive ? (
-                Widget({ step: step as Step, onSolved: () => setSolved(true) })
+                <Widget step={step as Step} onSolved={() => setSolved(true)} />
               ) : (
                 <NonInteractive step={step} />
               )}

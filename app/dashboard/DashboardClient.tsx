@@ -21,7 +21,7 @@ function fade(delay = 0) {
   return {
     initial: { opacity: 0, y: 16 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.45, delay, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.45, delay, ease: [0.22, 1, 0.36, 1] as const },
   };
 }
 
@@ -186,7 +186,8 @@ export default function DashboardClient({
                   <motion.div
                     initial={{ scaleY: 0 }}
                     animate={{ scaleY: 1 }}
-                    transition={{ delay: 0.3 + i * 0.05, duration: 0.35, origin: "bottom" }}
+                    transition={{ delay: 0.3 + i * 0.05, duration: 0.35 }}
+                    style={{ transformOrigin: "bottom" }}
                     className={`w-full h-8 rounded-[2px] ${filled ? "bg-off-black" : "border border-absolute-black"}`}
                   />
                   <span className="font-mono tracking-mono-sm text-[10px] uppercase text-off-black/50">
